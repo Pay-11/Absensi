@@ -3,21 +3,20 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class SesiAbsen extends Model
 {
-    protected $table = 'sesi_absen';
+    use HasFactory;
 
-    public $timestamps = false;
+    protected $table = 'sesi_absen';
 
     protected $fillable = [
         'jadwal_id',
         'tanggal',
         'token_qr',
-        'expired_at',
         'dibuka_oleh',
-        'dibuka_pada',
-        'ditutup_pada'
+        'dibuka_pada'
     ];
 
     public function jadwal()
@@ -28,5 +27,10 @@ class SesiAbsen extends Model
     public function absensi()
     {
         return $this->hasMany(Absensi::class);
+    }
+
+    public function pembuka()
+    {
+        return $this->belongsTo(User::class , 'dibuka_oleh');
     }
 }

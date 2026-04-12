@@ -14,10 +14,8 @@ return new class extends Migration
         Schema::create('sesi_absen', function (Blueprint $table) {
             $table->id();
             $table->foreignId('jadwal_id')->constrained('jadwal');
-            $table->enum('tipe',['jam_masuk','jam_pulang']);
             $table->date('tanggal');
             $table->string('token_qr');
-            $table->timestamp('expired_at');
             $table->foreignId('dibuka_oleh')->constrained('users');
             $table->timestamp('dibuka_pada');
             $table->timestamps();

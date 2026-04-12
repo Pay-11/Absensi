@@ -2,9 +2,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Jadwal extends Model
 {
+    use HasFactory;
+
     protected $table = 'jadwal';
 
     protected $fillable = [
@@ -28,7 +31,7 @@ class Jadwal extends Model
 
     public function guru()
     {
-        return $this->belongsTo(User::class,'id');
+        return $this->belongsTo(User::class , 'guru_id');
     }
 
     public function sesiAbsen()

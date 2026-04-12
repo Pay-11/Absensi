@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             GuruMapelSeeder::class,
             JadwalSeeder::class,
             JadwalTestingSeeder::class,
+            AssessmentCategorySeeder::class,
         ]);
     }
 }

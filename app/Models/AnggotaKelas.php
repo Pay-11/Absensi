@@ -2,9 +2,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class AnggotaKelas extends Model
 {
+    use HasFactory;
+
     protected $table = 'anggota_kelas';
 
     public $timestamps = false;
@@ -21,6 +24,8 @@ class AnggotaKelas extends Model
 
     public function murid()
     {
-        return $this->belongsTo(User::class,'id');
+        return $this->belongsTo(User::class , 'murid_id');
     }
+
+    
 }
