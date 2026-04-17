@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -9,11 +10,14 @@ return new class extends Migration
     {
         Schema::create('assessments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('evaluator_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('evaluatee_id')->constrained('users')->onDelete('cascade');
-            $table->date('assessment_date');
-            $table->string('period')->nullable();
-            $table->text('general_notes')->nullable();
+            $table->foreignId('guru_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('murid_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('kelas_id')->constrained('kelas')->cascadeOnDelete();
+            $table->foreignId('mapel_id')->constrained('mapel')->cascadeOnDelete();
+            
+            $table->date('tanggal');
+            $table->text('catatan')->nullable();
+            
             $table->timestamps();
         });
     }

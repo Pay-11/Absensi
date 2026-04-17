@@ -5,14 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Mapel extends Model
+class PointRule extends Model
 {
     use HasFactory;
 
-    protected $table = 'mapel';
-
     protected $fillable = [
-        'nama_mapel',
-        'kode_mapel'
+        'rule_name',
+        'target_role',
+        'condition_type',
+        'min_value',
+        'max_value',
+        'point_modifier'
     ];
 }

@@ -2,16 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Absensi extends Model
 {
     use HasFactory;
 
     protected $table = 'absensi';
-
-    public $timestamps = false;
+    public const UPDATED_AT = null;
 
     protected $fillable = [
         'sesi_absen_id',
@@ -20,9 +19,9 @@ class Absensi extends Model
         'waktu_scan'
     ];
 
-    public function sesi()
+    public function sesiAbsen()
     {
-        return $this->belongsTo(SesiAbsen::class, 'sesi_absen_id');
+        return $this->belongsTo(SesiAbsen::class);
     }
 
     public function murid()
@@ -30,4 +29,3 @@ class Absensi extends Model
         return $this->belongsTo(User::class, 'murid_id');
     }
 }
-

@@ -1,8 +1,9 @@
 <?php
+
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Jadwal extends Model
 {
@@ -31,11 +32,6 @@ class Jadwal extends Model
 
     public function guru()
     {
-        return $this->belongsTo(User::class , 'guru_id');
-    }
-
-    public function sesiAbsen()
-    {
-        return $this->hasMany(SesiAbsen::class);
+        return $this->belongsTo(User::class, 'guru_id');
     }
 }

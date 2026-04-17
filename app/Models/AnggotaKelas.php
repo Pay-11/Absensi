@@ -1,16 +1,15 @@
 <?php
+
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class AnggotaKelas extends Model
 {
     use HasFactory;
-
-    protected $table = 'anggota_kelas';
-
-    public $timestamps = false;
+    
+    public const UPDATED_AT = null; // doesn't have updated_at in schema
 
     protected $fillable = [
         'kelas_id',
@@ -24,8 +23,6 @@ class AnggotaKelas extends Model
 
     public function murid()
     {
-        return $this->belongsTo(User::class , 'murid_id');
+        return $this->belongsTo(User::class, 'murid_id');
     }
-
-    
 }

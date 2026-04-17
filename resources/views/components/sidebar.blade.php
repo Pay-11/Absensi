@@ -103,16 +103,24 @@
                 </li>
                 <!-- Misc -->
 
-                <li class="menu-item">
-                    <a href="{{ route('admin.penilaian-sikap') }}" class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-task"></i>
-                        <div data-i18n="Penilaian Sikap">Penilaian Sikap</div>
-                    </a>
-                </li>
+          
                 <li class="menu-item">
                     <a href="#" class="menu-link">
                         <i class="menu-icon tf-icons bx bx-user"></i>
                         <div data-i18n="Profile Admin">Profile Admin</div>
+                    </a>
+                </li>
+
+                <li class="menu-item">
+                    <a href="{{ route('point-rules.index') }}" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-list-ol"></i>
+                        <div data-i18n="Point Rules">Point Rules</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{ route('flexibility-items.index') }}" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-store"></i>
+                        <div data-i18n="Flexibility Items">Flex Items</div>
                     </a>
                 </li>
                 <li class="menu-item">

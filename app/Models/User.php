@@ -68,43 +68,43 @@ class User extends Authenticatable implements JWTSubject
     // murid ikut kelas
     public function kelas()
     {
-        return $this->belongsToMany(Kelas::class , 'anggota_kelas', 'murid_id', 'kelas_id');
+        return $this->belongsToMany(Kelas::class, 'anggota_kelas', 'murid_id', 'kelas_id');
     }
 
     // guru mengajar mapel
     public function mapel()
     {
-        return $this->belongsToMany(Mapel::class , 'guru_mapel', 'guru_id', 'mapel_id');
+        return $this->belongsToMany(Mapel::class, 'guru_mapel', 'guru_id', 'mapel_id');
     }
 
     // jadwal mengajar
     public function jadwal()
     {
-        return $this->hasMany(Jadwal::class , 'guru_id');
+        return $this->hasMany(Jadwal::class, 'guru_id');
     }
 
     // absensi murid
     public function absensi()
     {
-        return $this->hasMany(Absensi::class , 'murid_id');
+        return $this->hasMany(Absensi::class, 'murid_id');
     }
 
     // membuka sesi absen
     public function sesiDibuka()
     {
-        return $this->hasMany(SesiAbsen::class , 'dibuka_oleh');
+        return $this->hasMany(SesiAbsen::class, 'dibuka_oleh');
     }
 
     // evaluator
     public function assessmentsGiven()
     {
-        return $this->hasMany(Assessment::class , 'evaluator_id');
+        return $this->hasMany(Assessment::class, 'evaluator_id');
     }
 
     // yang dinilai
     public function assessmentsReceived()
     {
-        return $this->hasMany(Assessment::class , 'evaluatee_id');
+        return $this->hasMany(Assessment::class, 'evaluatee_id');
     }
     public function getJWTIdentifier()
     {
@@ -114,5 +114,10 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function pointLedgers()
+    {
+        return $this->hasMany(PointLedger::class, 'user_id');
     }
 }

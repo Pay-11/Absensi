@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\PointRuleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,12 @@ Route::prefix('admin')->group(function () {
     Route::put('/siswa/{id}', [SiswaController::class, 'update'])->name('siswa.update');
     Route::delete('/siswa/{id}', [SiswaController::class, 'destroy'])->name('siswa.destroy');
 
+    // CRUD POINT RULES & FLEXIBILITY ITEMS
+    Route::get('point-rules/data', [PointRuleController::class, 'data'])->name('point-rules.data');
+    Route::resource('point-rules', PointRuleController::class);
+
+    Route::get('flexibility-items/data', [\App\Http\Controllers\FlexibilityItemController::class, 'data'])->name('flexibility-items.data');
+    Route::resource('flexibility-items', \App\Http\Controllers\FlexibilityItemController::class);
 });
 
 /*

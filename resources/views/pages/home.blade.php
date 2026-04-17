@@ -18,7 +18,7 @@ id="layout-navbar">
 <div class="card mb-4">
 <div class="card-header d-flex justify-content-between">
 <h5>Data Siswa</h5>
-<a href="{{ route('siswa.create') }}" class="btn btn-primary">+ Tambah Siswa</a>
+<a href="#" class="btn btn-primary">+ Tambah Siswa</a>
 </div>
 
 <div class="table-responsive">

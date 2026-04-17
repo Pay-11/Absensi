@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class GuruMapel extends Model
 {
+    use HasFactory;
+    
     protected $table = 'guru_mapel';
-
-    public $timestamps = false;
+    public const UPDATED_AT = null;
 
     protected $fillable = [
         'guru_id',
@@ -17,7 +19,7 @@ class GuruMapel extends Model
 
     public function guru()
     {
-        return $this->belongsTo(User::class,'guru_id');
+        return $this->belongsTo(User::class, 'guru_id');
     }
 
     public function mapel()

@@ -6,24 +6,18 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('guru_mapel', function (Blueprint $table) {
             $table->id();
-
             $table->foreignId('guru_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('mapel_id')->constrained('mapel')->cascadeOnDelete();
-
-            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('created_at')->nullable();
+            
+            $table->unique(['guru_id', 'mapel_id']);
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('guru_mapel');

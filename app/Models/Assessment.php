@@ -2,32 +2,44 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Assessment extends Model
 {
-    protected $table = 'assessments';
+    use HasFactory;
 
     protected $fillable = [
-        'evaluator_id',
-        'evaluatee_id',
-        'assessment_date',
-        'period',
-        'general_notes',
+        'guru_id',
+        'murid_id',
+        'kelas_id',
+        'mapel_id',
+        'tanggal',
+        'catatan'
     ];
 
-    public function evaluator()
+    public function guru()
     {
-        return $this->belongsTo(User::class, 'evaluator_id');
+        return $this->belongsTo(User::class, 'guru_id');
     }
 
-    public function evaluatee()
+    public function murid()
     {
-        return $this->belongsTo(User::class, 'evaluatee_id');
+        return $this->belongsTo(User::class, 'murid_id');
+    }
+
+    public function kelas()
+    {
+        return $this->belongsTo(Kelas::class);
+    }
+
+    public function mapel()
+    {
+        return $this->belongsTo(Mapel::class);
     }
 
     public function details()
     {
-        return $this->hasMany(AssessmentDetail::class, 'assessment_id');
+        return $this->hasMany(AssessmentDetail::class);
     }
 }
