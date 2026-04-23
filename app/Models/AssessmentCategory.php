@@ -14,4 +14,13 @@ class AssessmentCategory extends Model
         'description',
         'is_active'
     ];
+
+    protected $casts = [
+        'is_active' => 'boolean',
+    ];
+
+    public function assessmentDetails()
+    {
+        return $this->hasMany(AssessmentDetail::class, 'category_id');
+    }
 }

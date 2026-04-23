@@ -4,12 +4,112 @@ namespace App\Http\Controllers;
 
 use App\Models\Jadwal;
 use App\Models\SesiAbsen;
+use App\Models\User;
+use App\Http\Controllers\Concerns\ExportsCsv;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Carbon\Carbon;
 
 class GuruController extends Controller
 {
+    use ExportsCsv;
+    // ============================
+    // ADMIN CRUD GURU
+    // ============================
+
+    public function adminIndex()
+    {
+        $guru = User::where('role', 'guru')
+            ->with('mapel')
+            ->orderBy('name')
+            ->get();
+
+        return view('pages.guru.index', compact('guru'));
+    }
+
+    public function adminStore(Request $request)
+    {
+        $request->validate([
+            'name'     => 'required|string|max:255',
+            'email'    => 'required|email|unique:users,email',
+            'password' => 'required|string|min:6',
+            'nip'      => 'nullable|string|max:20|unique:users,nip',
+        ]);
+
+        User::create([
+            'name'     => $request->name,
+            'email'    => $request->email,
+            'password' => Hash::make($request->password),
+            'role'     => 'guru',
+            'nip'      => $request->nip ?: null,
+        ]);
+
+        return redirect()->route('guru.admin.index')
+            ->with('success', 'Guru berhasil ditambahkan');
+    }
+
+    public function adminEdit($id)
+    {
+        $guru = User::where('role', 'guru')->findOrFail($id);
+        return view('pages.guru.edit', compact('guru'));
+    }
+
+    public function adminUpdate(Request $request, $id)
+    {
+        $guru = User::where('role', 'guru')->findOrFail($id);
+
+        $request->validate([
+            'name'  => 'required|string|max:255',
+            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($guru->id)],
+            'nip'   => ['nullable', 'string', 'max:20', Rule::unique('users', 'nip')->ignore($guru->id)],
+        ]);
+
+        $data = $request->only(['name', 'email', 'nip']);
+        $data['nip'] = $request->nip ?: null;
+
+        if ($request->filled('password')) {
+            $request->validate(['password' => 'string|min:6']);
+            $data['password'] = Hash::make($request->password);
+        }
+
+        $guru->update($data);
+
+        return redirect()->route('guru.admin.index')
+            ->with('success', 'Data guru berhasil diperbarui');
+    }
+
+    public function adminDestroy($id)
+    {
+        $guru = User::where('role', 'guru')->findOrFail($id);
+        $guru->delete();
+
+        return redirect()->route('guru.admin.index')
+            ->with('success', 'Guru berhasil dihapus');
+    }
+
+    public function export()
+    {
+        $guru = User::where('role', 'guru')->with('mapel')->orderBy('name')->get();
+
+        $headers = ['#', 'Nama Lengkap', 'Email', 'NIP', 'Mata Pelajaran', 'Terdaftar Sejak'];
+        $rows = [];
+        foreach ($guru as $i => $g) {
+            $rows[] = [
+                $i + 1,
+                $g->name,
+                $g->email,
+                $g->nip ?? '-',
+                $g->mapel->pluck('nama_mapel')->join('; ') ?: 'Belum ditugaskan',
+                $g->created_at->format('d/m/Y'),
+            ];
+        }
+
+        return $this->csvResponse($headers, $rows, 'data-guru-' . now()->format('Ymd'), '1a3a7a', 'eef2fa');
+    }
+
+
     /**
      * Show the Guru Dashboard.
      */
